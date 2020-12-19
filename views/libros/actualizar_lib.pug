@@ -1,0 +1,76 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    style
+      include ../css/style.css
+    title Actualizar libro
+    
+  body
+    div.texto
+      h1 Biblioteca municipal
+      h2 Actualizar libro
+    div.center
+        ul
+          li 
+            a(href="/") Inicio
+          li.dropdown
+            a(href="/l") Libros
+              div.dropdown-content
+                a(href="/l") Lista
+                a(href="/agregar_lib") Agregar
+          li.dropdown
+            a(href="/p") Prestamos
+              div.dropdown-content
+                a(href="/p") Lista
+                a(href="/agregar_pres") Agregar
+          div.topnav      
+            div.search-container
+              input(type="text" placeholder="Buscar..." name="search")
+              button(type="submit")
+                i.fa Buscar
+    hr
+    form#actualizar_lib
+      div.center
+        table
+          input(type="hidden", name="_id", value= mostrar._id)
+          tr
+            td Libro
+            td
+              input(type="text", name="libro", value=mostrar.libro, placeholder="Nombre del libro", style="color: DimGray")
+          tr
+            td Autor
+            td
+              input(type="text", name="autor", value=mostrar.autor, placeholder="Nombre del autor", style="color: DimGray")
+          tr
+            td Editorial
+            td
+              input(type="text", name="editorial", value=mostrar.editorial, placeholder="Nombre de la editorial", style="color: DimGray")
+          tr
+            td Descripción
+            td
+              textarea(cols="50", rows="10", name="descripcion", placeholder="Descripción del libro", id="descripcion" style="color: DimGray")= mostrar.descripcion
+          tr
+            td(colspan='2', align='right')
+              input(type="submit", value="Actualizar")
+    script.
+      $(document).ready(function () {
+        $("#actualizar_lib").on('submit', function(event) {
+          event.preventDefault()
+          const mostrar = $(this).serialize()
+
+          $.ajax({
+            url: '/actualizar_lib',
+            method: 'put',
+            data: mostrar,
+            success: function(result, status, xhr) {
+              console.log('success')
+              window.location.href = result.redirectTo
+            },
+            error: function(xhr, status, error) {
+              console.log('error')
+            }
+          })
+        })
+      })

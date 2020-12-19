@@ -1,0 +1,66 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    style
+      include ../css/style.css
+    title Biblioteca
+
+  body
+    div.texto
+      h1 Biblioteca municipal
+      h2 Lista de libros
+    div.center
+      ul
+        li 
+          a(href="/") Inicio
+        li.dropdown
+          a(href="/l") Libros
+            div.dropdown-content
+              a(href="/l") Lista
+              a(href="/agregar_lib") Agregar
+        li.dropdown
+          a(href="/p") Prestamos
+            div.dropdown-content
+              a(href="/p") Lista
+              a(href="/agregar_pres") Agregar
+        div.topnav      
+          div.search-container
+            input(type="text" placeholder="Buscar..." name="search")
+            button(type="submit")
+              i.fa Buscar
+      hr
+      each mostrar in libros
+        div.center.two
+          table
+            tr
+              td ⠀  
+                h2(${mostrar._id})= mostrar.libro
+                a.ver.two(href=`/mostrar/${mostrar._id}`) Ver
+            tr
+              td
+                a.act.three(href=`/actualizar/${mostrar._id}`) Actualizar          
+                a.eli.four.delete(href='#', data-id= mostrar._id) Eliminar          
+      else
+        p Lo sentimos, no hay libros registrados actualmente...     
+    script.
+     $(document).ready(function () {
+        $(".delete").on('click', function(event) {
+          event.preventDefault()
+          const sid = $(event.target).attr('data-id')
+
+          $.ajax({
+            url: '/eliminar_lib',
+            method: 'delete',
+            data: {id: sid},
+            success: function(result, status, xhr) {
+              console.log('success')
+              window.location.href = result.redirectTo
+            },
+            error: function(xhr, status, error) {
+              console.log('error')
+            }
+          })
+        })
+      })

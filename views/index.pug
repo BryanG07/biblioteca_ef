@@ -1,0 +1,36 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    style
+      include ./css/style.css
+
+    title Biblioteca
+
+  body
+    div.texto
+      h1 Biblioteca municipal
+      h2 Bienvenidos
+    div.center
+      ul
+        li 
+          a(href="/") Inicio
+        li.dropdown
+          a(href="/l") Libros
+            div.dropdown-content
+              a(href="/l") Lista
+              a(href="/agregar_lib") Agregar
+        li.dropdown
+          a(href="/p") Prestamos
+            div.dropdown-content
+              a(href="/p") Lista
+              a(href="/agregar_pres") Agregar
+        div.topnav      
+          div.search-container
+            input(type="text" placeholder="Buscar..." name="search")
+            button(type="submit")
+              i.fa Buscar
+      hr
+      div.texto
+        img(src= "https://bib.us.es/sites/bib3.us.es/files/cartel_bienvenidos_2015.png")

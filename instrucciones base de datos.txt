@@ -1,0 +1,4 @@
+nombre  base de datos: biblioteca_bd
+
+nombre collections: libros
+		    prestamo	

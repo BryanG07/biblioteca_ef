@@ -1,0 +1,75 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    style
+      include ../css/style.css
+    title Agregar libro
+   
+  body
+    div.texto
+      h1 Biblioteca municipal
+      h2 Agregar libro
+    div.center
+      ul
+        li 
+          a(href="/") Inicio
+        li.dropdown
+          a(href="/l") Libros
+            div.dropdown-content
+              a(href="/l") Lista
+              a(href="/agregar_lib") Agregar
+        li.dropdown
+          a(href="/p") Prestamos
+            div.dropdown-content
+              a(href="/p") Lista
+              a(href="/agregar_pres") Agregar
+        div.topnav      
+            div.search-container
+              input(type="text" placeholder="Buscar..." name="search")
+              button(type="submit")
+                i.fa Buscar
+    hr
+    div.center
+      form#agregar_lib 
+        table
+          tr
+            td Libro
+            td
+              input(type="text", name="libro", placeholder="Nombre del libro", style="color: DimGray", required)
+          tr
+            td Autor
+            td
+              input(type="text", name="autor", placeholder="Nombre del autor", style="color: DimGray", required)
+          tr
+            td Editorial
+            td
+              input(type="text", name="editorial", placeholder="Nombre de la editorial", style="color: DimGray", required)
+          tr
+            td Descripción
+            td
+              textarea(name="descripcion", placeholder="Descripción del libro", id="content", style="color: DimGray", required)
+          tr
+            td(colspan='2', align='right')
+              input(type="submit", value="Guardar")
+    script.
+      $(document).ready(function () {
+        $("#agregar_lib").on('submit', function(event) {
+          event.preventDefault()
+          const mostrar = $(this).serialize()
+
+          $.ajax({
+            url: '/agregar_lib',
+            method: 'post',
+            data: mostrar,
+            success: function(result, status, xhr) {
+              console.log('success')
+              window.location.href = result.redirectTo
+            },
+            error: function(xhr, status, error) {
+              console.log('error')
+            }
+          })
+        })
+      })

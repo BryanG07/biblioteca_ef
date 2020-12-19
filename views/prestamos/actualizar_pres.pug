@@ -1,0 +1,82 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js")
+    style
+      include ../css/style.css
+    title Actualizar prestamo
+    
+  body
+    div.texto
+      h1 Biblioteca municipal
+      h2 Actualizar prestamo
+    div.center
+        ul
+          li 
+            a(href="/") Inicio
+          li.dropdown
+            a(href="/l") Libros
+              div.dropdown-content
+                a(href="/l") Lista
+                a(href="/agregar_lib") Agregar
+          li.dropdown
+            a(href="/p") Prestamos
+              div.dropdown-content
+                a(href="/p") Lista
+                a(href="/agregar_pres") Agregar
+          div.topnav      
+            div.search-container
+              input(type="text" placeholder="Buscar..." name="search")
+              button(type="submit")
+                i.fa Buscar
+    hr
+    form#actualizar_pres
+      div.center
+        table
+          input(type="hidden", name="_id", value= mostrar._id)
+          tr
+            td Nombres
+            td
+              input(type="text", name="nombre", value=mostrar.nombre, placeholder="Nombres", style="color: DimGray")
+          tr
+            td Apellidos
+            td
+              input(type="text", name="apellido", value=mostrar.apellido, placeholder="Apellidos", style="color: DimGray")
+          tr
+            td Documento de identidad
+            td
+              input(type="text", name="documento", value=mostrar.documento, placeholder="Documento de identidad", style="color: DimGray")
+          tr
+          tr
+            td Teléfono
+            td
+              input(type="text", name="telefono", value=mostrar.telefono, placeholder="Número de telefono", style="color: DimGray")
+          tr
+            td Libro
+            td
+              select(name="libro", style="color: DimGray", ${mostrar._id}, required) 
+                option(value="x", style="color: DimGray", ${mostrar._id})
+          tr
+            td(colspan='2', align='right')
+              input(type="submit", value="Actualizar")
+    script.
+      $(document).ready(function () {
+        $("#actualizar_pres").on('submit', function(event) {
+          event.preventDefault()
+          const mostrar = $(this).serialize()
+
+          $.ajax({
+            url: '/actualizar_pres',
+            method: 'put',
+            data: mostrar,
+            success: function(result, status, xhr) {
+              console.log('success')
+              window.location.href = result.redirectTo
+            },
+            error: function(xhr, status, error) {
+              console.log('error')
+            }
+          })
+        })
+      })

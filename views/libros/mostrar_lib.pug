@@ -1,0 +1,53 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    style
+      include ../css/style.css
+    title Datos del libro
+
+  body
+    div.texto
+      h1 Biblioteca municipal
+      h2 Consultar libro 
+    div.center
+        ul
+          li 
+            a(href="/") Inicio
+          li.dropdown
+            a(href="/l") Libros
+              div.dropdown-content
+                a(href="/l") Lista
+                a(href="/agregar_lib") Agregar
+          li.dropdown
+            a(href="/p") Prestamos
+              div.dropdown-content
+                a(href="/p") Lista
+                a(href="/agregar_pres") Agregar
+          div.topnav      
+            div.search-container
+              input(type="text" placeholder="Buscar..." name="search")
+              button(type="submit")
+                i.fa Buscar
+    hr
+    if(mostrar)
+      div.center
+        table
+          tr
+            td Libro:
+            td
+              p= mostrar.libro
+          tr
+            td Autor:
+            td
+              p= mostrar.autor
+          tr
+            td Editorial:
+            td
+              p= mostrar.editorial 
+          tr  
+            td Descripción:
+            td
+              p=mostrar.descripcion
+    else
+      p No hay información del libro
